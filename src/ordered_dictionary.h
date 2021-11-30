@@ -94,10 +94,11 @@ public:
         while (e != nullptr)
         {
             std::cout << "{ " << e->key << ": " << e->value << " }";
-            while (e->next != nullptr)
+            Entry<K, V> *current = e;
+            while (current->next != nullptr)
             {
-                e = e->next;
-                std::cout << ", { " << e->key << ": " << e->value << " }";
+                current = current->next;
+                std::cout << ", { " << current->key << ": " << current->value << " }";
             }
             std::cout << std::endl;
             e = e->after;

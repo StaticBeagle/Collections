@@ -54,37 +54,39 @@ int main()
         std::cout << list[i] << std::endl;
     }
 
+    // Using double as key to force collisions
     std::cout << "Dictionary " << std::endl;
-    Dictionary<int, int> dict;
-    dict.add(1, 1);
-    dict.add(2, 3);
-    dict.add(3, 6);
-    dict.add(4, 5);
-    dict.add(5, 8);
-    dict.add(6, 9);
-    dict.add(7, 0);
-    dict.add(8, 7);
-    dict.add(9, 4);
-    dict.add(10, 14);
-    dict.add(11, 11);
-    dict.add(12, 10);
-    dict.add(13, 12);
+    Dictionary<double, int> dict;
+    dict.add(1.5, 1);
+    dict.add(2.6, 3);
+    dict.add(3.7, 6);
+    dict.add(4.8, 5);
+    dict.add(5.9, 8);
+    dict.add(6.1, 9);
+    dict.add(7.2, 0);
+    dict.add(8.3, 7);
+    dict.add(9.4, 4);
+    dict.add(10.5, 14);
+    dict.add(11.6, 11);
+    dict.add(12.7, 10);
+    dict.add(13.8, 12);
     dict.print();
 
+    // Using double as key to force collisions
     std::cout << "Ordered Dictionary " << std::endl;
-    OrderedDictionary<int, int> ordDict;
-    ordDict.add(1, 1);
-    ordDict.add(2, 3);
-    ordDict.add(3, 6);
-    ordDict.add(4, 5);
-    ordDict.add(5, 8);
-    ordDict.add(6, 9);
-    ordDict.add(7, 0);
-    ordDict.add(8, 7);
-    ordDict.add(9, 4);
-    ordDict.add(10, 14);
-    ordDict.add(11, 11);
-    ordDict.add(12, 10);
-    ordDict.add(13, 12);
+    OrderedDictionary<double, int> ordDict;
+    ordDict.add(1.5, 1);
+    ordDict.add(2.6, 3);
+    ordDict.add(3.7, 6);
+    ordDict.add(4.8, 5);
+    ordDict.add(5.9, 8);
+    ordDict.add(6.1, 9);
+    ordDict.add(7.2, 0);
+    ordDict.add(8.3, 7);
+    ordDict.add(9.4, 4);
+    ordDict.add(10.5, 14);
+    ordDict.add(11.6, 11);
+    ordDict.add(12.7, 10);
+    ordDict.add(13.8, 12);
     ordDict.print();
 }
