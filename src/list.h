@@ -11,22 +11,11 @@ class List
         m_data = new T[10];
     }
 
-    List(size_t size)
-        : m_capacity{size},
-          m_count{size}
+    List(size_t capacity)
+        : m_capacity{capacity},
+          m_count{0}
     {
-        m_data = new T[size];
-    }
-
-    List(size_t size, T fill)
-        : m_capacity{size},
-          m_count{size}
-    {
-        m_data = new T[size];
-        for (size_t i = 0; i < size; ++i)
-        {
-            m_data[i] = fill;
-        }
+        m_data = new T[m_capacity];
     }
 
     List(const List<T> &other)

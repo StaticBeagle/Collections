@@ -33,13 +33,9 @@ int main()
     linkedList.pop_front();
     linkedList.print();
 
-    LinkedList<int> linkedList2 = linkedList;
-
     std::cout << "Cleared the linkedList" << std::endl;
     linkedList.clear();
     linkedList.print();
-
-    linkedList2.print();
 
     Stack<int> stack;
     std::cout << "Initial stack" << std::endl;
@@ -78,6 +74,8 @@ int main()
     std::cout << "Ordered Dictionary " << std::endl;
     OrderedDictionary<int, int> ordDict;
     ordDict.add(1, 1);
+    ordDict.add(1, 2);
+    ordDict.add(1, 3);
     ordDict.add(2, 3);
     ordDict.add(3, 6);
     ordDict.add(4, 5);

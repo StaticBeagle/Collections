@@ -5,11 +5,11 @@
 template <class K, class V>
 class OrderedDictionary
 {
-  private:
-    template<class TKey, class TValue>
+private:
+    template <class TKey, class TValue>
     struct Entry
     {
-      public:
+    public:
         size_t hash;
         K key;
         V value;
@@ -18,15 +18,19 @@ class OrderedDictionary
         Entry<K, V> *after = nullptr;
     };
 
-  public:
+public:
     OrderedDictionary()
-        : m_buckets{16, nullptr},
+        : m_buckets{16},
           m_capacity{16},
           m_count{0},
           m_load_factor{0.75},
           m_before{nullptr},
           m_begin{nullptr}
     {
+        for (size_t i = 0; i < m_buckets.size(); ++i)
+        {
+            m_buckets.add(nullptr);
+        }
     }
 
     ~OrderedDictionary()
@@ -57,7 +61,6 @@ class OrderedDictionary
                 // return oldValue;
             }
         }
-        ++m_count;
         this->add_entry(hash, key, value, i);
     }
 
@@ -90,12 +93,18 @@ class OrderedDictionary
         Entry<K, V> *e = m_begin;
         while (e != nullptr)
         {
-            std::cout << "{ " << e->key << ": " << e->value << " }" << std::endl;
+            std::cout << "{ " << e->key << ": " << e->value << " }";
+            while (e->next != nullptr)
+            {
+                e = e->next;
+                std::cout << ", { " << e->key << ": " << e->value << " }";
+            }
+            std::cout << std::endl;
             e = e->after;
         }
     }
 
-  private:
+private:
     List<Entry<K, V> *> m_buckets;
     size_t m_capacity;
     size_t m_count;
@@ -109,28 +118,24 @@ class OrderedDictionary
         return hash & (size - 1);
     }
 
-    void grow_container(size_t size)
+    void grow_container(size_t capacity)
     {
-        List<Entry<K, V> *> newBuckets{size, nullptr};
+        List<Entry<K, V> *> newBuckets{capacity};
+        for (size_t i = 0; i < capacity; ++i)
+        {
+            newBuckets.add(nullptr);
+        }
         for (size_t i = 0; i < m_buckets.size(); ++i)
         {
             Entry<K, V> *e = m_buckets[i];
-            while (e != nullptr)
+            if (e == nullptr)
             {
-                size_t hash = std::hash<K>{}(e->key);
-                size_t index = index_for(hash, size);
-                e->hash = hash;
-                if (newBuckets[index] == nullptr)
-                {
-                    newBuckets[index] = e;
-                }
-                else
-                {
-                    newBuckets[index]->next = e;
-                }
-                e = e->next;
-                newBuckets[index]->next = nullptr;
+                continue;
             }
+            size_t hash = std::hash<K>{}(e->key);
+            size_t index = index_for(hash, capacity);
+            e->hash = hash;
+            newBuckets[index] = e;
         }
         m_buckets = std::move(newBuckets);
     }
@@ -138,7 +143,7 @@ class OrderedDictionary
     void add_entry(size_t hash, const K &key, const V &value, size_t i)
     {
         Entry<K, V> *e = new Entry<K, V>{hash, key, value};
-        if (this->size() == 1)
+        if (this->is_empty())
         {
             m_begin = e;
         }
@@ -150,6 +155,7 @@ class OrderedDictionary
         this->add_to_bucket(i, e);
         e->before = m_before;
         m_before = e;
+        ++m_count;
     }
 
     void add_to_bucket(size_t index, Entry<K, V> *e)
@@ -160,7 +166,12 @@ class OrderedDictionary
         }
         else
         {
-            m_buckets[index]->next = e;
+            Entry<K, V> *current = m_buckets[index];
+            while (current->next != nullptr)
+            {
+                current = current->next;
+            }
+            current->next = e;
         }
     }
 
