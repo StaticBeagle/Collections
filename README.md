@@ -1,2 +1,2 @@
 # Collections
-Basic collections for learning purposes
+Basic collections for educational purposes
